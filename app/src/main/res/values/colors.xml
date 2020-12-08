@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4282f4</color>
+    <color name="colorPrimaryDark">@color/transparent</color>
+    <color name="colorAccent">#4282f4</color>
+
+    <color name="text_bottom_normal">#515151</color>
+    <color name="text_bottom_pressed">#4282f4</color>
+    <color name="background_alpha">#ccf5f5f5</color>
+    <color name="bottom_bar_overlay">@color/background_alpha</color>
+    <color name="ic_launch_background">#4282f4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="coloF6F6">#F6F6F6</color>
+</resources>

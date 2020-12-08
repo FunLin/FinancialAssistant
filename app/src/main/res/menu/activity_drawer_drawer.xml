@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/g1">
+        <item
+            android:id="@+id/nav_music"
+            android:icon="@drawable/ic_music_note_black_24dp"
+            android:title="播放音乐" />
+        <item
+            android:id="@+id/nav_clear_budget"
+            android:icon="@drawable/ic_clear_all_black_24dp"
+            android:title="清空所有月预算" />
+        <item
+            android:id="@+id/nav_clear_record"
+            android:icon="@drawable/ic_clear_all_black_24dp"
+            android:title="清空所有记账记录" />
+    </group>
+    <item android:title="其他" android:id="@+id/g2">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_error_about_black_24dp"
+                android:title="关于我们" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="退出应用" />
+        </menu>
+    </item>
+</menu>

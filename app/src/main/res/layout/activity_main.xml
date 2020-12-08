@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="onclick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:background="@color/bottom_bar_overlay">
+
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:drawableTop="@drawable/selector_icon_home"
+                    android:text="@string/bottom_tab_home"
+                    style="@style/Bottom_Tab"
+                    android:onClick="onClick"/>
+
+                <TextView
+                    android:id="@+id/tv_history"
+                    android:drawableTop="@drawable/selector_icon_history"
+                    android:text="@string/bottom_tab_history"
+                    style="@style/Bottom_Tab"
+                    android:onClick="onClick"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_mine"
+                    android:drawableTop="@drawable/selector_icon_mine"
+                    android:text="@string/bottom_tab_mine"
+                    style="@style/Bottom_Tab"
+                    android:onClick="onClick"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_drawer"
+            app:menu="@menu/activity_drawer_drawer" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
