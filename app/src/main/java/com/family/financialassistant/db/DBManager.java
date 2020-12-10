@@ -120,7 +120,8 @@ public class DBManager {
             cv.put("type", record.getType());
             cv.put("name", record.getName());
             cv.put("time", record.getTime());
-            cv.put("ctime", System.currentTimeMillis());
+            cv.put("itemType", record.getItemType());
+            cv.put("ctime", String.valueOf(System.currentTimeMillis()));
 
             long rowId = mDatabase.insert(DBHelper.TABLE_RECORDS, null, cv);
             if (rowId < 0) {
@@ -155,9 +156,10 @@ public class DBManager {
                 double expenses = cursor.getDouble(cursor.getColumnIndex("expenses"));
                 String desc = cursor.getString(cursor.getColumnIndex("desc"));
                 int type = cursor.getInt(cursor.getColumnIndex("type"));
+                int itemType = cursor.getInt(cursor.getColumnIndex("itemType"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
-                long ctime = cursor.getLong(cursor.getColumnIndex("ctime"));
+                String ctime = cursor.getString(cursor.getColumnIndex("ctime"));
 
                 Record record = new Record();
                 record.setId(dbId);
@@ -167,6 +169,8 @@ public class DBManager {
                 record.setType(type);
                 record.setName(name);
                 record.setTime(time);
+                record.setcTime(ctime);
+                record.setItemType(itemType);
                 records.add(record);
             }
         } finally {
@@ -195,9 +199,10 @@ public class DBManager {
                 double expenses = cursor.getDouble(cursor.getColumnIndex("expenses"));
                 String desc = cursor.getString(cursor.getColumnIndex("desc"));
                 int type = cursor.getInt(cursor.getColumnIndex("type"));
+                int itemType = cursor.getInt(cursor.getColumnIndex("itemType"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
-                long ctime = cursor.getLong(cursor.getColumnIndex("ctime"));
+                String ctime = cursor.getString(cursor.getColumnIndex("ctime"));
 
                 record.setId(dbId);
                 record.setIncome(income);
@@ -206,6 +211,8 @@ public class DBManager {
                 record.setType(type);
                 record.setName(name);
                 record.setTime(time);
+                record.setcTime(ctime);
+                record.setItemType(itemType);
             }
         } finally {
             closeCursor(cursor);
@@ -216,15 +223,15 @@ public class DBManager {
     /**
      * 删除记录
      */
-    public boolean deleteRecord(String time) {
+    public boolean deleteRecord(String cTime) {
         boolean success = false;
         try {
             mDatabase = mDBHelper.getWritableDatabase();
             beginTransaction(mDatabase);
 
-            if (!TextUtils.isEmpty(time)) {
-                String where = "time = ?";
-                String[] whereValue = {time};
+            if (!TextUtils.isEmpty(cTime)) {
+                String where = "ctime = ?";
+                String[] whereValue = {cTime};
 
                 if (mDatabase.delete(DBHelper.TABLE_RECORDS, where, whereValue) < 0) {
                     return false;
@@ -258,7 +265,7 @@ public class DBManager {
             cv.put("budget", monthbudget.getBudget());
             cv.put("bank", monthbudget.getBank());
             cv.put("time", monthbudget.getTime());
-            cv.put("ctime", System.currentTimeMillis());
+            cv.put("ctime", String.valueOf(System.currentTimeMillis()));
 
             long rowId = mDatabase.insert(DBHelper.TABLE_MONTH_BUDGET, null, cv);
             if (rowId < 0) {
@@ -292,13 +299,14 @@ public class DBManager {
                 double budget = cursor.getDouble(cursor.getColumnIndex("budget"));
                 String bank = cursor.getString(cursor.getColumnIndex("bank"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
-                long ctime = cursor.getLong(cursor.getColumnIndex("ctime"));
+                String ctime = cursor.getString(cursor.getColumnIndex("ctime"));
 
                 Monthbudget monthbudget = new Monthbudget();
                 monthbudget.setId(dbId);
                 monthbudget.setBank(bank);
                 monthbudget.setTime(time);
                 monthbudget.setBudget(budget);
+                monthbudget.setcTime(ctime);
                 monthbudgets.add(monthbudget);
             }
         } finally {
@@ -326,12 +334,13 @@ public class DBManager {
                 double budget = cursor.getDouble(cursor.getColumnIndex("budget"));
                 String bank = cursor.getString(cursor.getColumnIndex("bank"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
-                long ctime = cursor.getLong(cursor.getColumnIndex("ctime"));
+                String ctime = cursor.getString(cursor.getColumnIndex("ctime"));
 
                 monthbudget.setId(dbId);
                 monthbudget.setBank(bank);
                 monthbudget.setTime(time);
                 monthbudget.setBudget(budget);
+                monthbudget.setcTime(ctime);
             }
         } finally {
             closeCursor(cursor);
@@ -342,15 +351,15 @@ public class DBManager {
     /**
      * 删除月预算
      */
-    public boolean deleteMonthBudget(String time) {
+    public boolean deleteMonthBudget(String cTime) {
         boolean success = false;
         try {
             mDatabase = mDBHelper.getWritableDatabase();
             beginTransaction(mDatabase);
 
-            if (!TextUtils.isEmpty(time)) {
-                String where = "time = ?";
-                String[] whereValue = {time};
+            if (!TextUtils.isEmpty(cTime)) {
+                String where = "ctime = ?";
+                String[] whereValue = {cTime};
 
                 if (mDatabase.delete(DBHelper.TABLE_MONTH_BUDGET, where, whereValue) < 0) {
                     return false;

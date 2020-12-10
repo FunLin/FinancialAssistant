@@ -55,11 +55,11 @@ public class RecordApi {
     /**
      * 根据时间删除记录
      */
-    public boolean recordDelete(String time) {
-        if (TextUtils.isEmpty(time)) {
+    public boolean recordDelete(String cTime) {
+        if (TextUtils.isEmpty(cTime)) {
             return false;
         }
-        boolean ret = DBManager.getInstance().deleteRecord(time);
+        boolean ret = DBManager.getInstance().deleteRecord(cTime);
         return ret;
     }
 }

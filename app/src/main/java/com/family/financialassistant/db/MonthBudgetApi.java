@@ -56,11 +56,11 @@ public class MonthBudgetApi {
     /**
      * 根据时间删除月预算
      */
-    public boolean budgetDelete(String time) {
-        if (TextUtils.isEmpty(time)) {
+    public boolean budgetDelete(String cTime) {
+        if (TextUtils.isEmpty(cTime)) {
             return false;
         }
-        boolean ret = DBManager.getInstance().deleteMonthBudget(time);
+        boolean ret = DBManager.getInstance().deleteMonthBudget(cTime);
         return ret;
     }
 }

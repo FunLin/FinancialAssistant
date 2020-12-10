@@ -10,6 +10,15 @@ public class Monthbudget {
     private double budget;
     private String bank;
     private String time;
+    private String cTime;
+
+    public String getcTime() {
+        return cTime == null ? "" : cTime;
+    }
+
+    public void setcTime(String cTime) {
+        this.cTime = cTime == null ? "" : cTime;
+    }
 
     public int getId() {
         return id;

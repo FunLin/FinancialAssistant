@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -21,6 +22,145 @@
             app:titleName="新增月预算"
             app:rightImageVisible="true"
             app:backImageVisible="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_marginBottom="1dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/budget_prompt"
+                android:textSize="16sp"
+                android:textColor="@color/black_333"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月份:"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:hint="格式:如2020-9,右上角选择时间即可"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="输入本月预算:"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:background="@null"
+                android:textSize="15sp"
+                android:inputType="number|numberDecimal"
+                android:hint="请输入预算金额,如1000.00" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="选择银行"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <Spinner
+                android:id="@+id/sp_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:entries="@array/bank"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最终预算:"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_end_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:text="100.00"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:text="提交"
+            android:onClick="onClick"
+            android:textColor="@color/white"
+            android:background="@drawable/submit_btn_bg"/>
 
     </LinearLayout>
 </layout>

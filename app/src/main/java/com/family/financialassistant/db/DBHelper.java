@@ -65,7 +65,10 @@ public class DBHelper extends SQLiteOpenHelper {
         recordSql.append(" desc").append(" varchar(128) default \"\"   ,");//备注
         recordSql.append(" type").append(" varchar(32) default \"\"   ,");//支出 0 r 收入1
         recordSql.append(" name").append(" varchar(32) default \"\"   ,");//支出or收入的具体项名称
-        recordSql.append(" ctime").append(" long  ,");//时间戳
+        recordSql.append(" itemType").append(" varchar(32) default \"\"   ,");//支出or收入的具体项type
+        // 衣食住行0123 4全选 5衣食住 6衣食 7衣住 8衣行 9食住行 10食住 11食行 12住行
+        // 工资红包 01 4全选
+        recordSql.append(" ctime").append(" varchar(32) default \"\"   ,");//时间戳
         recordSql.append(" time").append(" varchar(32) default \"\"   )");//记录时间
 
         // 创建月预算的SQL语句
@@ -74,7 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         budgetSql.append(" _id").append(CREATE_TABLE_PRIMARY_SQL);
         budgetSql.append(" budget").append(" varchar(32) default \"\"   ,");//预算
         budgetSql.append(" bank").append(" varchar(32) default \"\"   ,");//银行
-        budgetSql.append(" ctime").append(" long  ,");//时间戳
+        budgetSql.append(" ctime").append(" varchar(32) default \"\"   ,");//时间戳
         budgetSql.append(" time").append(" varchar(32) default \"\"   )");//记录时间
 
         try {

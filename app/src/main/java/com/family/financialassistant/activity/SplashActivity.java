@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import com.family.financialassistant.R;
 import com.family.financialassistant.base.BaseActivity;
+import com.family.financialassistant.common.Constant;
 import com.family.financialassistant.databinding.ActivitySplashBinding;
+import com.family.financialassistant.util.SPUtils;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -32,9 +34,17 @@ public class SplashActivity extends FragmentActivity {
         mSplashBinding.pvLoading.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override
             public void onAnimationEnd() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
-                finish();
+                boolean isRemember = SPUtils.getBoolean(Constant.IS_REMEMBER, false);
+                //isRemember true已经记住密码登录过了 直接跳首页即可
+                if(isRemember){
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
+                    finish();
+                }else {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
+                    finish();
+                }
             }
         });
         mSplashBinding.pvLoading.startAnim();

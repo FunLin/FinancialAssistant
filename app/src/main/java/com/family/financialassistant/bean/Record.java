@@ -11,8 +11,26 @@ public class Record {
     private double expenses;
     private String desc;
     private int type;
+    private int itemType;
     private String name;
     private String time;
+    private String cTime;
+
+    public String getcTime() {
+        return cTime == null ? "" : cTime;
+    }
+
+    public void setcTime(String cTime) {
+        this.cTime = cTime == null ? "" : cTime;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
 
     public int getId() {
         return id;

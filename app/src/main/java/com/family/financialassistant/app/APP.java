@@ -13,7 +13,6 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
-import com.xuexiang.xui.XUI;
 
 import androidx.annotation.NonNull;
 
@@ -31,8 +30,6 @@ public class APP extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        XUI.init(this); //初始化UI框架
-        XUI.debug(true);  //开启UI框架调试日志
         // 初始化数据库
         DBManager.getInstance().init(this);
     }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bank">
+        <item>工商银行 利率:1.35</item>
+        <item>建设银行 利率:1.35</item>
+        <item>中国银行 利率:1.35</item>
+        <item>交通银行 利率:1.35</item>
+        <item>招商银行 利率:1.35</item>
+        <item>浦发银行 利率:1.4</item>
+        <item>上海银行 利率:1.4</item>
+        <item>平安银行 利率:1.4</item>
+        <item>北京银行 利率:1.5</item>
+    </string-array>v
+</resources>

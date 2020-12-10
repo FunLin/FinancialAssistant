@@ -9,6 +9,14 @@
             android:icon="@drawable/ic_music_note_black_24dp"
             android:title="播放音乐" />
         <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_video_library_black_24dp"
+            android:title="理财视频" />
+        <item
+            android:id="@+id/nav_net_data"
+            android:icon="@drawable/ic_data_usage_black_24dp"
+            android:title="理财网络数据" />
+        <item
             android:id="@+id/nav_clear_budget"
             android:icon="@drawable/ic_clear_all_black_24dp"
             android:title="清空所有月预算" />

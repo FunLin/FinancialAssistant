@@ -18,13 +18,40 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleName="历史"
-            app:rightImageVisible="true"
+            app:rightImageVisible="false"
             app:backImageVisible="false"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_record"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_marginBottom="1dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history_promote"
+                android:textSize="16sp"
+                android:textColor="@color/black_333"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_record"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="10"
+                tools:listitem="@layout/rcv_item_history"/>
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 </layout>

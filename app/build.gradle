@@ -21,6 +21,50 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //签名配置
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./keystore/financial.jks")
+                keyAlias 'key0'
+                keyPassword KEY_PASSWORD
+                storePassword KEYSTORE_PASSWORD
+            }
+            catch (ex) {
+                throw new InvalidUserDataException("You should define KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties.")
+            }
+        }
+        debug {
+            try {
+                storeFile file("./keystore/financial.jks")
+                keyAlias 'key0'
+                keyPassword KEY_PASSWORD
+                storePassword KEYSTORE_PASSWORD
+            }
+            catch (ex) {
+                throw new InvalidUserDataException("You should define KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties.")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
     dataBinding {
         enabled = true
     }
@@ -35,19 +79,21 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
 
     //Loading
     implementation 'me.wangyuwei:ParticleView:1.0.4'
+    //视频播放器
+    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
     // 安卓Utils
     api 'com.blankj:utilcode:1.29.0'
-
+    //SmartRefresh //刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-
-    implementation 'com.github.xuexiangjys:XUI:1.1.5'
+    //列表
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //网络请求
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }

@@ -4,11 +4,21 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.UtilsTransActivity;
 import com.family.financialassistant.R;
+import com.family.financialassistant.manager.DialogHelper;
 import com.family.financialassistant.util.StatusBarUtil;
 import com.family.financialassistant.widget.CustomProgress;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +45,28 @@ public abstract class BaseActivity<VDB extends ViewDataBinding>
         initStatusBar();
         processLogic();
         setListener();
+        if(isGetPermission()){
+            requestPermissions();
+        }
+    }
+
+    protected boolean isGetPermission() {
+        return false;
+    }
+
+
+    // 请求权限
+    public void requestPermissions() {
+        PermissionUtils.permission(PermissionConstants.STORAGE,PermissionConstants.LOCATION
+                ,PermissionConstants.CAMERA,PermissionConstants.PHONE,PermissionConstants.MICROPHONE,
+                PermissionConstants.CONTACTS)
+                .rationale(new PermissionUtils.OnRationaleListener() {
+                    @Override
+                    public void rationale(UtilsTransActivity activity, ShouldRequest shouldRequest) {
+                        DialogHelper.showRationaleDialog(shouldRequest);
+                    }
+                })
+                .request();
     }
 
 
@@ -93,5 +125,16 @@ public abstract class BaseActivity<VDB extends ViewDataBinding>
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+
+    //快速获取textView 或 EditText上文字内容
+    public String getStringByUI(View view) {
+        if (view instanceof EditText) {
+            return ((EditText) view).getText().toString().trim();
+        } else if (view instanceof TextView) {
+            return ((TextView) view).getText().toString().trim();
+        }
+        return "";
     }
 }
