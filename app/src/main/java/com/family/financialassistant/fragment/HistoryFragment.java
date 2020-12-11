@@ -1,10 +1,14 @@
 package com.family.financialassistant.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Canvas;
+import android.view.View;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -29,7 +33,10 @@ import com.family.financialassistant.manager.BroadcastReceiverManager;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,7 +46,7 @@ import java.util.Objects;
  * @Author : lsg
  * @Description : 历史操作记录
  **/
-public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
+public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> implements View.OnClickListener {
 
     private HistoryAdapter mHistoryAdapter;
     public static HistoryFragment getInstance(){
@@ -54,6 +61,8 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
 
     @Override
     public void processLogic() {
+        bindView.titleBar.setRightImageId(R.drawable.ic_date);
+        bindView.titleBar.setRightImageClick(this);
         initRecyclerView();
         initData();
         initRefresh();
@@ -75,8 +84,11 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
     }
 
     private void initData() {
-        getMonthBudgetListSize();
-        getRecordListSize();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+        String format = formatter.format(new Date());
+        //默认获取当月的 用户选择后获取指定月份
+        getMonthBudgetListSize(format);
+        getRecordListSize(format);
     }
 
 
@@ -137,43 +149,79 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
 
     /**
      * 获取月预算数据库数量
+     * time 未选择时间就用当前时间 2020-12
      * @return
      */
-    private void getMonthBudgetListSize() {
+    private void getMonthBudgetListSize(String time) {
         List<Monthbudget> allMonthBudgetList = MonthBudgetApi.getInstance().
                 getAllMonthBudgetList();
+        mHistoryAdapter.getData().clear();
         if(allMonthBudgetList != null && allMonthBudgetList.size() > 0){
             for (int i = 0; i < allMonthBudgetList.size(); i++) {
                 Monthbudget monthbudget = allMonthBudgetList.get(i);
-                mHistoryAdapter.addData(new HistoryBean(0,0, monthbudget.getTime(),
-                        monthbudget.getBudget(),"", monthbudget.getcTime()));
-            }
-            mHistoryAdapter.notifyDataSetChanged();
-        }
-    }
-
-    /**
-     * 获取月预算数据库数量
-     * @return
-     */
-    private void getRecordListSize() {
-        List<Record> recordList = RecordApi.getInstance().
-                getAllRecordList();
-        if(recordList != null && recordList.size() > 0){
-            for (int i = 0; i < recordList.size(); i++) {
-                Record record = recordList.get(i);
-                if(record.getType() == 1){
-                    mHistoryAdapter.addData(new HistoryBean(record.getType(),1, record.getTime(),
-                            record.getIncome(), record.getDesc(), record.getcTime()));
-                }else {
-                    mHistoryAdapter.addData(new HistoryBean(record.getType(),1, record.getTime(),
-                            record.getExpenses(), record.getDesc(), record.getcTime()));
+                //数据库中的时间满足用户选择的时间添加数据
+                if(monthbudget.getTime().startsWith(time)){
+                    mHistoryAdapter.addData(new HistoryBean(0,0, monthbudget.getTime(),
+                            monthbudget.getBudget(),"", monthbudget.getcTime()));
                 }
             }
         }
         mHistoryAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 获取月预算数据库数量
+     * @return
+     */
+    private void getRecordListSize(String time) {
+        List<Record> recordList = RecordApi.getInstance().
+                getAllRecordList();
+        if(recordList != null && recordList.size() > 0){
+            for (int i = 0; i < recordList.size(); i++) {
+                Record record = recordList.get(i);
+                if(record.getTime().startsWith(time)){
+                    if(record.getType() == 1){
+                        mHistoryAdapter.addData(new HistoryBean(record.getType(),1, record.getTime(),
+                                record.getIncome(), record.getDesc(), record.getcTime()));
+                    }else {
+                        mHistoryAdapter.addData(new HistoryBean(record.getType(),1, record.getTime(),
+                                record.getExpenses(), record.getDesc(), record.getcTime()));
+                    }
+                }
+            }
+        }
+        mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if(id == R.id.imgRight){
+            showDatePickerDialog();
+        }
+    }
+
+    /**
+     * 时间选择框
+     */
+    private void showDatePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                getMonthBudgetListSize(year + "-" + (monthOfYear + 1));
+                getRecordListSize(year + "-" + (monthOfYear + 1));
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+
+    /**
+     * 用户操作监听
+     */
     public class HistoryReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

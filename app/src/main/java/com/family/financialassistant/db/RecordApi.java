@@ -9,6 +9,9 @@ import com.family.financialassistant.bean.Record;
 
 import java.util.List;
 
+/**
+ * 记账记录API类,提供查询删除等功能
+ */
 public class RecordApi {
     private static RecordApi instance;
 

@@ -10,12 +10,15 @@ import com.family.financialassistant.base.BaseActivity;
 import com.family.financialassistant.common.Constant;
 import com.family.financialassistant.databinding.ActivityLoginBinding;
 import com.family.financialassistant.util.SPUtils;
-import com.family.financialassistant.util.StatusBarUtil;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by lsg on 2020-12-10
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements View.OnClickListener {
+
+    public static final int REQUEST_CODE = 0;
 
     @Override
     public int getLayoutId() {
@@ -53,6 +56,21 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
             finish();
+        }else if(id == R.id.tv_register){
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivityForResult(intent,REQUEST_CODE);
         }
+    }
+
+    /**
+     * 处理注册页面的回传数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String user_account = data != null ? data.getStringExtra("user_account") : "";
+        String user_psd = data != null ? data.getStringExtra("user_psd") : "";
+        bindView.etAccountNum.setText(user_account);
+        bindView.etPsd.setText(user_psd);
     }
 }

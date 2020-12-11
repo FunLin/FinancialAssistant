@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.family.financialassistant.R;
+import com.family.financialassistant.activity.AddDepositActivity;
 import com.family.financialassistant.activity.AddMonthBudgetActivity;
 import com.family.financialassistant.activity.AddRecordActivity;
 import com.family.financialassistant.activity.MainActivity;
@@ -278,7 +279,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
      */
     public void showSingleAlertDialog(){
         mIndex = 0;
-        final String[] items = {"添加月预算", "添加记账记录"};
+        final String[] items = {"添加月预算", "添加记账记录", "添加存款"};
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle("选择添加项");
         alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
@@ -296,6 +297,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                     ActivityUtils.startActivityForResult(Objects.requireNonNull(getActivity()),intent, REQUEST_CODE);
                 }else if(mIndex == 1){
                     Intent intent = new Intent(getActivity(), AddRecordActivity.class);
+                    ActivityUtils.startActivityForResult(Objects.requireNonNull(getActivity()),intent, REQUEST_CODE);
+                }else if(mIndex == 2){
+                    Intent intent = new Intent(getActivity(), AddDepositActivity.class);
                     ActivityUtils.startActivityForResult(Objects.requireNonNull(getActivity()),intent, REQUEST_CODE);
                 }
                 mAlertDialog.dismiss();

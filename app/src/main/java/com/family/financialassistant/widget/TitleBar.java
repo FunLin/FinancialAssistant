@@ -1,6 +1,5 @@
 package com.family.financialassistant.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -9,9 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.family.financialassistant.R;
-import com.family.financialassistant.util.ButtonUtils;
 
 
 /**

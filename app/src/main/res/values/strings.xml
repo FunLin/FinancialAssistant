@@ -10,4 +10,6 @@
     <string name="budget_prompt">本页用于记录用户一个月的预算,用户可输入预算后选择银行,软件可自动根据银行利率来计算您本月最终预算</string>
     <string name="record_promote">本页用于记录用户一个月内某一天的收入和支出,用户可选择支出收入自行录入数据,衣食住行,工资红包可以多选,便于记录,备注内容非必填,限定128字符,请合理规划</string>
     <string name="history_promote">本页记录用户所有添加操作,包括月预算添加,记账记录添加,对于添加错误项可右滑删除</string>
+    <string name="deposit_prompt">本页用于计算各大银行的利息比较,用户可选择银行,选择存款时间来计算最终所得金额</string>
+    <string name="rate_promote">您选择的银行是%s,存期为%s,利率为%s</string>
 </resources>

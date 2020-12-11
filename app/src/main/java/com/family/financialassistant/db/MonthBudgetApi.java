@@ -10,6 +10,9 @@ import com.family.financialassistant.bean.Record;
 
 import java.util.List;
 
+/**
+ * 月预算API类,提供查询删除等功能
+ */
 public class MonthBudgetApi {
     private static MonthBudgetApi instance;
 

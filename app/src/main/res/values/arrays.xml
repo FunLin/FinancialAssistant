@@ -10,5 +10,20 @@
         <item>上海银行 利率:1.4</item>
         <item>平安银行 利率:1.4</item>
         <item>北京银行 利率:1.5</item>
-    </string-array>v
+    </string-array>
+
+    <string-array name="bank_name">
+        <item>工商银行</item>
+        <item>建设银行</item>
+        <item>中国银行</item>
+        <item>交通银行</item>
+    </string-array>
+
+    <string-array name="period">
+        <item>一个月</item>
+        <item>三个月</item>
+        <item>半年</item>
+        <item>一年</item>
+    </string-array>
+
 </resources>
