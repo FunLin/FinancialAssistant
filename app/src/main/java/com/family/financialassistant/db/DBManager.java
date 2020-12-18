@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.family.financialassistant.bean.Monthbudget;
 import com.family.financialassistant.bean.Record;
+import com.family.financialassistant.bean.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -376,6 +377,68 @@ public class DBManager {
     }
 
     // ---------------------------------------月预算相关 end------------------------------------------
+
+    // ---------------------------------------用户相关 start----------------------------------------
+
+    /**
+     * 添加用户
+     */
+    public boolean addUser(UserBean userBean) {
+        if (mDBHelper == null) {
+            return false;
+        }
+        try {
+            mDatabase = mDBHelper.getWritableDatabase();
+            beginTransaction(mDatabase);
+
+            ContentValues cv = new ContentValues();
+            cv.put("account", userBean.getAccount());
+            cv.put("password", userBean.getPassword());
+
+            long rowId = mDatabase.insert(DBHelper.TABLE_USER, null, cv);
+            if (rowId < 0) {
+                return false;
+            }
+            setTransactionSuccessful(mDatabase);
+            Log.i(TAG, "insert user success:" + rowId);
+        } catch (Exception e) {
+            Log.e(TAG, "addUser e = " + e.getMessage());
+            return false;
+        } finally {
+            endTransaction(mDatabase);
+        }
+        return true;
+    }
+
+    /**
+     * 查询所有账号密码
+     */
+    public List<UserBean> queryAllUsers() {
+        Cursor cursor = null;
+        List<UserBean> userBeanList = new ArrayList<>();
+        try {
+            if (mDBHelper == null) {
+                return null;
+            }
+            SQLiteDatabase db = mDBHelper.getReadableDatabase();
+            cursor = db.query(DBHelper.TABLE_USER, null, null, null, null, null, null);
+            while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+                int dbId = cursor.getInt(cursor.getColumnIndex("_id"));
+                int account  = cursor.getInt(cursor.getColumnIndex("account"));
+                int password = cursor.getInt(cursor.getColumnIndex("password"));
+
+                UserBean userBean = new UserBean();
+                userBean.setAccount(account);
+                userBean.setPassword(password);
+                userBeanList.add(userBean);
+            }
+        } finally {
+            closeCursor(cursor);
+        }
+        return userBeanList;
+    }
+
+    // ---------------------------------------用户相关 end------------------------------------------
 
     private void beginTransaction(SQLiteDatabase mDatabase) {
         if (allowTransaction) {

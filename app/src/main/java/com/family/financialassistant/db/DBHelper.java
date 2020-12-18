@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
 
     /**
-     * 用户表
+     * 记录表
      */
     public static final String TABLE_RECORDS = "records";
 
@@ -32,6 +32,11 @@ public class DBHelper extends SQLiteOpenHelper {
      * 识别记录表
      */
     public static final String TABLE_MONTH_BUDGET = "budget";
+
+    /**
+     * 用户表
+     */
+    public static final String TABLE_USER = "user";
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -47,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECORDS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTH_BUDGET);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
             onCreate(db);
         }
     }
@@ -80,9 +86,18 @@ public class DBHelper extends SQLiteOpenHelper {
         budgetSql.append(" ctime").append(" varchar(32) default \"\"   ,");//时间戳
         budgetSql.append(" time").append(" varchar(32) default \"\"   )");//记录时间
 
+        // 创建user的SQL语句
+        StringBuffer userSql = new StringBuffer();
+        userSql.append(CREATE_TABLE_START_SQL).append(TABLE_USER).append(" ( ");
+        userSql.append(" _id").append(CREATE_TABLE_PRIMARY_SQL);
+        userSql.append(" account").append(" varchar(32) default \"\"   ,");//账号
+        userSql.append(" password").append(" varchar(32) default \"\"   )");//密码
+
+
         try {
             db.execSQL(recordSql.toString());
             db.execSQL(budgetSql.toString());
+            db.execSQL(userSql.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

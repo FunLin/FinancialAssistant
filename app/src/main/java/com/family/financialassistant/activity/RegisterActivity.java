@@ -7,9 +7,11 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.family.financialassistant.R;
 import com.family.financialassistant.base.BaseActivity;
+import com.family.financialassistant.bean.UserBean;
 import com.family.financialassistant.common.Constant;
 import com.family.financialassistant.databinding.ActivityLoginBinding;
 import com.family.financialassistant.databinding.ActivityRegisterBinding;
+import com.family.financialassistant.db.UserApi;
 import com.family.financialassistant.util.SPUtils;
 
 /**
@@ -30,10 +32,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> impl
         bindView.setOnclick(this);
     }
 
-    @Override
-    protected boolean isGetPermission() {
-        return true;
-    }
 
     @Override
     public void onClick(View view) {
@@ -47,12 +45,22 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> impl
                 ToastUtils.showShort("请输入密码");
                 return;
             }
-            ToastUtils.showShort("注册成功");
-            Intent intent = new Intent();
-            intent.putExtra("user_account",bindView.etAccountNum.getText().toString());
-            intent.putExtra("user_psd",bindView.etPsd.getText().toString());
-            setResult(RESULT_CODE,intent);
-            finish();
+            int account = Integer.parseInt(getStringByUI(bindView.etAccountNum));
+            int password = Integer.parseInt(getStringByUI(bindView.etPsd));
+            UserBean userBean = new UserBean(account,password);
+            //数据库新增用户
+            boolean userAdd = UserApi.getInstance().UserAdd(userBean);
+            //用户注册成功数据回传登陆页 替代用户输入
+            if(userAdd){
+                ToastUtils.showShort("注册成功");
+                Intent intent = new Intent();
+                intent.putExtra("user_account",bindView.etAccountNum.getText().toString());
+                intent.putExtra("user_psd",bindView.etPsd.getText().toString());
+                setResult(RESULT_CODE,intent);
+                finish();
+            }else {
+                ToastUtils.showShort("注册失败");
+            }
         }
     }
 }

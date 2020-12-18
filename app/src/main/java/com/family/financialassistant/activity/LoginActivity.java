@@ -7,9 +7,13 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.family.financialassistant.R;
 import com.family.financialassistant.base.BaseActivity;
+import com.family.financialassistant.bean.UserBean;
 import com.family.financialassistant.common.Constant;
 import com.family.financialassistant.databinding.ActivityLoginBinding;
+import com.family.financialassistant.db.UserApi;
 import com.family.financialassistant.util.SPUtils;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -31,11 +35,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
     }
 
     @Override
-    protected boolean isGetPermission() {
-        return true;
-    }
-
-    @Override
     public void onClick(View view) {
         int id = view.getId();
         if(id == R.id.btn_login){
@@ -47,15 +46,33 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
                 ToastUtils.showShort("请输入密码");
                 return;
             }
-
-            if(bindView.rbRememberPsd.isChecked()){
-                SPUtils.putBoolean(Constant.IS_REMEMBER,true);
+            int account = Integer.parseInt(getStringByUI(bindView.etAccountNum));
+            int password = Integer.parseInt(getStringByUI(bindView.etPsd));
+            boolean isLoginSuccess = false;
+            //数据库获取所有用户信息 与用户输入内容进行比对
+            List<UserBean> allUserList = UserApi.getInstance().getAllUserList();
+            if(allUserList != null &&allUserList.size() > 0){
+                for (int i = 0; i < allUserList.size(); i++) {
+                    UserBean userBean = allUserList.get(i);
+                    if(account == userBean.getAccount() && password == userBean.getPassword()){
+                        isLoginSuccess = true;
+                        break;
+                    }else {
+                        isLoginSuccess = false;
+                    }
+                }
+                //比对成功跳转首页并将登陆页关闭
+                if(isLoginSuccess){
+                    ToastUtils.showShort("登录成功");
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
+                    finish();
+                }else {
+                    ToastUtils.showShort("请检查您输入的账号密码是否正确");
+                }
+            }else {
+                ToastUtils.showShort("请先去注册");
             }
-            ToastUtils.showShort("登录成功");
-
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.screen_zoom_in,R.anim.screen_zoom_out);
-            finish();
         }else if(id == R.id.tv_register){
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent,REQUEST_CODE);

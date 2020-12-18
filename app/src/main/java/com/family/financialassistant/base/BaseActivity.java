@@ -45,30 +45,7 @@ public abstract class BaseActivity<VDB extends ViewDataBinding>
         initStatusBar();
         processLogic();
         setListener();
-        if(isGetPermission()){
-            requestPermissions();
-        }
     }
-
-    protected boolean isGetPermission() {
-        return false;
-    }
-
-
-    // 请求权限
-    public void requestPermissions() {
-        PermissionUtils.permission(PermissionConstants.STORAGE,PermissionConstants.LOCATION
-                ,PermissionConstants.CAMERA,PermissionConstants.PHONE,PermissionConstants.MICROPHONE,
-                PermissionConstants.CONTACTS)
-                .rationale(new PermissionUtils.OnRationaleListener() {
-                    @Override
-                    public void rationale(UtilsTransActivity activity, ShouldRequest shouldRequest) {
-                        DialogHelper.showRationaleDialog(shouldRequest);
-                    }
-                })
-                .request();
-    }
-
 
     /**
      * 设置透明状态栏,兼容4.4

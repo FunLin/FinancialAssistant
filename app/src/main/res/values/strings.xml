@@ -4,8 +4,8 @@
     <string name="bottom_tab_history">历史</string>
     <string name="bottom_tab_mine">我的</string>
 
-    <string name="nav_header_title">胡启超</string>
-    <string name="nav_header_subtitle">2432814941@qq.com</string>
+    <string name="nav_header_title">姓名</string>
+    <string name="nav_header_subtitle">1433223@163.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="budget_prompt">本页用于记录用户一个月的预算,用户可输入预算后选择银行,软件可自动根据银行利率来计算您本月最终预算</string>
     <string name="record_promote">本页用于记录用户一个月内某一天的收入和支出,用户可选择支出收入自行录入数据,衣食住行,工资红包可以多选,便于记录,备注内容非必填,限定128字符,请合理规划</string>
